@@ -13,6 +13,7 @@ import org.usfirst.frc.team3130.robot.commands.DefaultDrive;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
@@ -37,14 +38,23 @@ public class Chassis extends Subsystem {
 	
 	private Chassis(){
 		srx_leftFront= new WPI_TalonSRX(RobotMap.CAN_DRIVE_LEFTFRONT);
-		srx_leftRear = new WPI_TalonSRX(RobotMap.CAN_DRIVE_LEFTFRONT);
+		srx_leftRear = new WPI_TalonSRX(RobotMap.CAN_DRIVE_LEFTREAR);
 		srx_rightFront = new WPI_TalonSRX(RobotMap.CAN_DRIVE_RIGHTFRONT);
 		srx_rightRear = new WPI_TalonSRX(RobotMap.CAN_DRIVE_RIGHTREAR);
 		
+		/*
 		srx_leftRear.set(ControlMode.Follower, RobotMap.CAN_DRIVE_LEFTFRONT);
 		srx_rightRear.set(ControlMode.Follower, RobotMap.CAN_DRIVE_RIGHTFRONT);
+		srx_leftFront.set(ControlMode.PercentOutput,0);
+		srx_rightFront.set(ControlMode.PercentOutput,0);
+		*/
 		
-		m_drive=new DifferentialDrive(srx_leftFront, srx_rightFront);
+		SpeedControllerGroup l = new SpeedControllerGroup(srx_leftFront, srx_leftRear);
+		SpeedControllerGroup r = new SpeedControllerGroup(srx_rightFront, srx_rightRear);
+		
+		//m_drive=new DifferentialDrive(srx_leftFront, srx_rightFront);
+		m_drive=new DifferentialDrive(l, r);
+		m_drive.setSafetyEnabled(false);
 	}
 
 	public void initDefaultCommand() {
@@ -52,6 +62,9 @@ public class Chassis extends Subsystem {
 	}
 	
 	public static void driveArcade(double speed, double turn, boolean squaredInputs){
+		//System.out.println(srx_leftFront);
 		m_drive.arcadeDrive(speed, turn, squaredInputs);
-	}
+		/*srx_leftFront.set(1);
+		srx_leftRear.set(1);
+	*/}
 }

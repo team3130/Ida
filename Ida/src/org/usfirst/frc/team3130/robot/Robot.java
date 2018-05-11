@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team3130.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -25,6 +26,7 @@ import org.usfirst.frc.team3130.robot.subsystems.Chassis;
 public class Robot extends TimedRobot {
 	public static Chassis m_subsystem = Chassis.getInstance();
 	public static OI m_oi;
+	public static Compressor compressor;
 
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -35,6 +37,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
+		compressor = new Compressor(1);
 		m_oi = OI.getInstance();
 		m_chooser.addDefault("Default Auto", new DefaultDrive());
 		// chooser.addObject("My Auto", new MyAutoCommand());

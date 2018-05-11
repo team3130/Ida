@@ -35,7 +35,7 @@ public class DefaultDrive extends Command {
 		
 		speed*=(OI.stickL.getZ()+1)/2;
 		turn*=(OI.stickR.getZ()+1)/2;
-		
+		System.out.println(speed+" "+turn);
 		Chassis.driveArcade(speed, turn, true);
 	}
 

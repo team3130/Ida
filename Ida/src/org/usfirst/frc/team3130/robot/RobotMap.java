@@ -15,14 +15,14 @@ package org.usfirst.frc.team3130.robot;
  */
 public class RobotMap {
 	//CAN
-	public static final int CAN_DRIVE_RIGHTFRONT=1;
-	public static final int CAN_DRIVE_RIGHTREAR=2;
+	public static final int CAN_DRIVE_RIGHTFRONT=2;
+	public static final int CAN_DRIVE_RIGHTREAR=4;
 	public static final int CAN_DRIVE_LEFTFRONT=3;
-	public static final int CAN_DRIVE_LEFTREAR=4;
+	public static final int CAN_DRIVE_LEFTREAR=5;
 	
 	//JOYSTICKS
-	public static final int stickL = 1;
-	public static final int stickR = 2;
+	public static final int stickL = 0;
+	public static final int stickR = 1;
 	
 	//BUTTON LIST
 	//Gamepad Button List
