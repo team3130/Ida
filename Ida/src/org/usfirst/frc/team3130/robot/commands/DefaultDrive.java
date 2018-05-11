@@ -8,25 +8,35 @@
 package org.usfirst.frc.team3130.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team3130.robot.Robot;
+
+import org.usfirst.frc.team3130.robot.OI;
+import org.usfirst.frc.team3130.robot.subsystems.Chassis;
 
 /**
  * An example command.  You can replace me with your own command.
  */
-public class ExampleCommand extends Command {
-	public ExampleCommand() {
+public class DefaultDrive extends Command {
+	public DefaultDrive() {
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.m_subsystem);
+		requires(Chassis.getInstance());
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		Chassis.driveArcade(0, 0, false);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+		double speed = -OI.stickL.getY();
+		double turn = OI.stickR.getX();
+		
+		speed*=(OI.stickL.getZ()+1)/2;
+		turn*=(OI.stickR.getZ()+1)/2;
+		
+		Chassis.driveArcade(speed, turn, true);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -38,11 +48,13 @@ public class ExampleCommand extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
+		Chassis.driveArcade(0, 0, false);
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
+		end();
 	}
 }
