@@ -67,4 +67,8 @@ public class Chassis extends Subsystem {
 		/*srx_leftFront.set(1);
 		srx_leftRear.set(1);
 	*/}
+	
+	public static void driveTank(double l, double r, boolean squaredInputs){
+		m_drive.tankDrive(l, r, squaredInputs);
+	}
 }

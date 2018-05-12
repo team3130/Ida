@@ -10,12 +10,15 @@ package org.usfirst.frc.team3130.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc.team3130.robot.OI;
+import org.usfirst.frc.team3130.robot.Toggle;
+import org.usfirst.frc.team3130.robot.Toggle.edgeType;
 import org.usfirst.frc.team3130.robot.subsystems.Chassis;
 
 /**
  * An example command.  You can replace me with your own command.
  */
 public class DefaultDrive extends Command {
+	Toggle<Boolean> t = new Toggle<>(true, false);
 	public DefaultDrive() {
 		// Use requires() here to declare subsystem dependencies
 		requires(Chassis.getInstance());
@@ -30,13 +33,21 @@ public class DefaultDrive extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+		t.toggleStatusOnEdgeChange(OI.stickL.getRawButton(6), edgeType.kRisingEdge);
 		double speed = -OI.stickL.getY();
+		double speedR = -OI.stickR.getY();
 		double turn = OI.stickR.getX();
 		
 		speed*=(OI.stickL.getZ()+1)/2;
 		turn*=(OI.stickR.getZ()+1)/2;
-		System.out.println(speed+" "+turn);
-		Chassis.driveArcade(speed, turn, true);
+		speedR*=(OI.stickR.getZ()+1)/2;
+		//System.out.println(speed+" "+turn);
+		
+		if(t.getStatus()){
+			Chassis.driveArcade(speed, turn, true);
+		}else{
+			Chassis.driveTank(speed, speedR, true);
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
